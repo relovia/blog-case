@@ -1,0 +1,117 @@
+<app-home-layout>
+  <div class="container mx-auto px-4 py-8 dark:bg-gray-300">
+    <!-- Blog Post Details -->
+    <article class="bg-white shadow-lg rounded-lg overflow-hidden" *ngIf="post">
+      <img
+        [src]="getImageUrl(post.id!)"
+        [alt]="post.title"
+        class="w-full h-64 object-cover"
+      />
+      <div class="p-6">
+        <div class="flex justify-between">
+          <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
+          <div>
+            <button
+              type="button"
+              [routerLink]="['/management/blog/edit', post.id]"
+              class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            >
+              Edit blog post
+            </button>
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteConfirmationModal"
+              (click)="deleteBlogPost(post.id!)"
+              class="inline-flex items-center ml-3 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            >
+              Delete blog post
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center mb-4">
+          <img
+            [src]="getImageUrl(post.id!)"
+            [alt]="post.authorName"
+            class="w-10 h-10 rounded-full mr-4"
+          />
+          <div>
+            <p class="font-semibold">{{ post.authorName }}</p>
+            <p class="text-gray-600">{{ post.publishedDate! | appTimeAgo }}</p>
+          </div>
+        </div>
+        <div class="prose max-w-none" [innerHTML]="post.content"></div>
+      </div>
+    </article>
+
+    <!-- Comments Section -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Comments</h2>
+
+      <!-- Comment Form -->
+      <form
+        (ngSubmit)="isEditing ? updateComment() : createComment()"
+        class="mb-8"
+      >
+        <textarea
+          [(ngModel)]="newComment"
+          name="comment"
+          rows="4"
+          class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Write a comment..."
+        ></textarea>
+        <button
+          type="submit"
+          class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        >
+          {{ isEditing ? "Update Comment" : "Post Comment" }}
+        </button>
+      </form>
+
+      <!-- Comments List -->
+      <div class="space-y-6">
+        <div
+          *ngFor="let comment of comments"
+          class="bg-gray-100 p-4 rounded-lg"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+              <img
+                [src]="getImageUrl(comment.userId!)"
+                [alt]="comment.username"
+                class="w-8 h-8 rounded-full mr-3"
+              />
+              <div>
+                <p class="font-semibold">{{ comment.username }}</p>
+                <p class="text-sm text-gray-600">
+                  {{ comment.commentDate! | appTimeAgo }}
+                </p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <button
+                (click)="editComment(comment)"
+                class="text-blue-500 hover:text-blue-700"
+              >
+                Edit
+              </button>
+              <button
+                (click)="deleteComment(comment.id!)"
+                class="text-red-500 hover:text-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          <p>{{ comment.content }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-home-layout>
+
+<app-confirmation-pop-up
+  *ngIf="showDeleteConfirmation"
+  (confirm)="onDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+></app-confirmation-pop-up>

@@ -1,0 +1,13 @@
+export * from './authentication-controller.service';
+import { AuthenticationControllerService } from './authentication-controller.service';
+export * from './authentication-controller.serviceInterface';
+export * from './blog-post-controller.service';
+import { BlogPostControllerService } from './blog-post-controller.service';
+export * from './blog-post-controller.serviceInterface';
+export * from './comment-controller.service';
+import { CommentControllerService } from './comment-controller.service';
+export * from './comment-controller.serviceInterface';
+export * from './user-controller.service';
+import { UserControllerService } from './user-controller.service';
+export * from './user-controller.serviceInterface';
+export const APIS = [AuthenticationControllerService, BlogPostControllerService, CommentControllerService, UserControllerService];

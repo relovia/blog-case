@@ -1,0 +1,27 @@
+<app-home-layout>
+  <div
+    class="container min-h-screen flex flex-col justify-center items-center text-center"
+  >
+    <img
+      src="https://img.freepik.com/free-vector/404-error-with-landscape-concept-illustration_114360-7898.jpg"
+      alt="404"
+      class="mb-8"
+    />
+    <div class="w-full">
+      <div class="container">
+        <h1 class="text-5xl font-bold mb-4">Oops!</h1>
+        <h2 class="text-red-600 text-4xl font-semibold mb-4">404 Not Found</h2>
+        <div class="text-2xl mb-8">
+          Sorry, an error has occured, Requested page not found!
+        </div>
+        <div class="mt-4">
+          <a routerLink="/" class="btn btn-lg btn-primary me-2"
+            ><span class="glyphicon glyphicon-home"></span> Take Me Home </a
+          ><a [routerLink]="['/contact']" class="btn btn-lg btn-warning me-2"
+            ><span class="glyphicon glyphicon-envelope"></span> Contact Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-home-layout>

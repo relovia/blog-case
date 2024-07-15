@@ -1,0 +1,50 @@
+<header>
+  <nav>
+    <div class="dark:bg-gray-900">
+      <div class="flex justify-between h-16 px-10 shadow items-center">
+        <div class="flex items-center space-x-8">
+          <h1
+            class="text-xl lg:text-2xl font-bold cursor-pointer text-white"
+            [routerLink]="title?.routerLink || '/'"
+          >
+            {{ title?.text }}
+          </h1>
+          <div class="hidden md:flex justify-around space-x-4">
+            <a
+              *ngFor="let item of navItems"
+              [routerLink]="item.link"
+              class="hover:text-indigo-600 text-gray-300"
+            >
+              {{ item.label }}
+            </a>
+          </div>
+        </div>
+        <div class="flex space-x-4 items-center">
+          <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+            <button
+              type="button"
+              class="bg-gray-300 px-4 py-2 rounded hover:bg-indigo-300 text-sm"
+              (click)="onLogout()"
+            >
+              Logout
+            </button>
+          </ng-container>
+          <ng-template #notLoggedIn>
+            <a
+              routerLink="/register"
+              class="bg-gray-300 px-4 py-2 rounded hover:bg-indigo-300 text-sm"
+            >
+              Register
+            </a>
+            <a
+              routerLink="/login"
+              class="bg-gray-300 px-4 py-2 rounded hover:bg-indigo-300 text-sm"
+            >
+              Login
+            </a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
